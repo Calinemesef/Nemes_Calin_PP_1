@@ -14,6 +14,8 @@ public class Aufgabe1 {
         FileWriter fw = new FileWriter("top-games-metacritic.txt");
         FileWriter fw2 = new FileWriter("top-games-date.txt");
         FileWriter fw3 = new FileWriter("top-games-name.txt");
+        FileWriter fw4 = new FileWriter("top-games-user.txt");
+
 
 
 
@@ -73,14 +75,6 @@ public class Aufgabe1 {
          *  und deren Name mit D (top-games-name.txt) beginnt. Trennen Sie die Daten mit dem Hashtag-Zeichen (#) ab.
          */
 
-        ArrayList<List<String>> listaFiltrata = new ArrayList<>();
-        ArrayList<List<String>> listaFiltrata2;
-
-        listaFiltrata.addAll(lista);
-        //listaFiltrata2= (ArrayList<List<String>>) listaFiltrata.stream().filter(s-> Integer.parseInt(s.get(2))>9).collect(Collectors.toList());
-        //listaFiltrata2.forEach(System.out::println);
-
-
         ArrayList<List<String>> listaFiltrata3 = new ArrayList<>();
         List<List<String>> listaFiltrata4;
         listaFiltrata3.addAll(lista);
@@ -97,5 +91,21 @@ public class Aufgabe1 {
             fw3.write('\n');
             fw3.flush();
         }
+
+        ArrayList<List<String>> listaFiltrata = new ArrayList<>();
+        ArrayList<List<String>> listaFiltrata2;
+
+        listaFiltrata.addAll(lista);
+        listaFiltrata2= (ArrayList<List<String>>) listaFiltrata.stream().filter(s-> Float.parseFloat(s.get(2))>9).collect(Collectors.toList());
+        //listaFiltrata2.forEach(System.out::println);
+
+        String joined4;
+        for(List<String> el : listaFiltrata2){
+            joined4=String.join("#",el.toString());
+            fw4.write(joined4);
+            fw4.write('\n');
+            fw4.flush();
+        }
+
     }
     }
