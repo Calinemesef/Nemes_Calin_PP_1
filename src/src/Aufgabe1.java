@@ -1,9 +1,11 @@
 import com.opencsv.*;
+import com.sun.jdi.IntegerValue;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Aufgabe1 {
     public static void main(String[] args) throws IOException {
@@ -11,6 +13,9 @@ public class Aufgabe1 {
         FileReader fr = new FileReader("top-games-suffled.txt");
         FileWriter fw = new FileWriter("top-games-metacritic.txt");
         FileWriter fw2 = new FileWriter("top-games-date.txt");
+        FileWriter fw3 = new FileWriter("top-games-name.txt");
+
+
 
 
         CSVParser parser = new CSVParserBuilder().withSeparator('*').build();
@@ -21,50 +26,41 @@ public class Aufgabe1 {
         String[] line;
         while ((line = csv.readNext()) != null) {
             List<String> list = Arrays.asList(line);
-            //System.out.println(list);
             lista.add(list);
-            //String joined;
-//            joined = String.join(";", list);
-//                fw.write(joined);
-//                fw.flush();
-//                System.out.println();
-//            }
-            //fw.close();
         }
-        //lista.forEach(System.out::println);
-        //System.out.println(lista.get(1).get(1));
+
 
         /**
          * Sortieren Sie die Daten nach Metacritic Punktzahl (absteigend) und Erscheinungsdatum (absteigend).
          * Speichern Sie die Ergebnislisten in anderen Dateien (top-games-metacritic.txt, top-games-date.txt)
          */
 
-        ArrayList<List<String>> lista_sortata = new ArrayList<>();
-        lista_sortata.addAll(lista);
-        //System.out.println(lista_sortata);
+        ArrayList<List<String>> listaSortata = new ArrayList<>();
+        listaSortata.addAll(lista);
+        //System.out.println(listaSortata);
 
-        lista_sortata.sort(Comparator.comparing(l -> l.get(1)));    // sortieren nach punktanzahl
-        Collections.reverse(lista_sortata);
-        //System.out.println(lista_sortata);
+        listaSortata.sort(Comparator.comparing(l -> l.get(1)));    // sortieren nach punktanzahl
+        Collections.reverse(listaSortata);
+        //System.out.println(listaSortata);
 
         // Trennen Sie die Daten mit dem Hashtag-Zeichen (#) ab.
         String joined;
-        for(List<String> el : lista_sortata){
+        for(List<String> el : listaSortata){
             joined=String.join("#",el.toString());
             fw.write(joined);
             fw.write('\n');
             fw.flush();
         }
 
-        ArrayList<List<String>> lista_sortata2 = new ArrayList<>();
-        lista_sortata2.addAll(lista);
+        ArrayList<List<String>> listaSortata2 = new ArrayList<>();
+        listaSortata2.addAll(lista);
 
-        lista_sortata2.sort(Comparator.comparing(l -> l.get(3)));    // sortieren nach jahr absteigend
-        Collections.reverse(lista_sortata2);
-        System.out.println(lista_sortata2);
+        listaSortata2.sort(Comparator.comparing(l -> l.get(3)));    // sortieren nach jahr absteigend
+        Collections.reverse(listaSortata2);
+       // System.out.println(listaSortata2);
 
         String joined2;
-        for(List<String> el : lista_sortata2){
+        for(List<String> el : listaSortata2){
             joined=String.join("#",el.toString());
             fw2.write(joined);
             fw2.write('\n');
@@ -72,6 +68,34 @@ public class Aufgabe1 {
         }
 
 
+        /**
+         *  Filtern Sie die Daten, deren Benutzer Punktzahl größer als 9 (top-games-user.txt) ist
+         *  und deren Name mit D (top-games-name.txt) beginnt. Trennen Sie die Daten mit dem Hashtag-Zeichen (#) ab.
+         */
 
+        ArrayList<List<String>> listaFiltrata = new ArrayList<>();
+        ArrayList<List<String>> listaFiltrata2;
+
+        listaFiltrata.addAll(lista);
+        //listaFiltrata2= (ArrayList<List<String>>) listaFiltrata.stream().filter(s-> Integer.parseInt(s.get(2))>9).collect(Collectors.toList());
+       // listaFiltrata2.forEach(System.out::println);
+
+
+        ArrayList<List<String>> listaFiltrata3 = new ArrayList<>();
+        List<List<String>> listaFiltrata4;
+        listaFiltrata3.addAll(lista);
+
+
+        listaFiltrata4=listaFiltrata3.stream().filter(s->s.get(0).charAt(0) == 'D').collect(Collectors.toList());
+        //listaFiltrata4.forEach(System.out::println);
+
+
+        String joined3;
+        for(List<String> el : listaFiltrata4){
+            joined3=String.join("#",el.toString());
+            fw3.write(joined3);
+            fw3.write('\n');
+            fw3.flush();
+        }
     }
     }
