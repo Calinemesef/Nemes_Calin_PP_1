@@ -10,6 +10,8 @@ public class Aufgabe1 {
 
         FileReader fr = new FileReader("top-games-suffled.txt");
         FileWriter fw = new FileWriter("top-games-metacritic.txt");
+        FileWriter fw2 = new FileWriter("top-games-date.txt");
+
 
         CSVParser parser = new CSVParserBuilder().withSeparator('*').build();
         CSVReader csv = new CSVReaderBuilder(fr).withCSVParser(parser).build();
@@ -21,13 +23,13 @@ public class Aufgabe1 {
             List<String> list = Arrays.asList(line);
             //System.out.println(list);
             lista.add(list);
-            String joined;
+            //String joined;
 //            joined = String.join(";", list);
 //                fw.write(joined);
 //                fw.flush();
 //                System.out.println();
 //            }
-            fw.close();
+            //fw.close();
         }
         //lista.forEach(System.out::println);
         //System.out.println(lista.get(1).get(1));
@@ -37,11 +39,38 @@ public class Aufgabe1 {
          * Speichern Sie die Ergebnislisten in anderen Dateien (top-games-metacritic.txt, top-games-date.txt)
          */
 
-        ArrayList<String> lista_sortata = new ArrayList<>();
+        ArrayList<List<String>> lista_sortata = new ArrayList<>();
+        lista_sortata.addAll(lista);
+        //System.out.println(lista_sortata);
 
-        lista.sort(Comparator.comparing(l -> l.get(1)));    // sortieren nach punktanzahl
-        Collections.reverse(lista);
-        System.out.println(lista);
+        lista_sortata.sort(Comparator.comparing(l -> l.get(1)));    // sortieren nach punktanzahl
+        Collections.reverse(lista_sortata);
+        //System.out.println(lista_sortata);
+
+        // Trennen Sie die Daten mit dem Hashtag-Zeichen (#) ab.
+        String joined;
+        for(List<String> el : lista_sortata){
+            joined=String.join("#",el.toString());
+            fw.write(joined);
+            fw.write('\n');
+            fw.flush();
+        }
+
+        ArrayList<List<String>> lista_sortata2 = new ArrayList<>();
+        lista_sortata2.addAll(lista);
+
+        lista_sortata2.sort(Comparator.comparing(l -> l.get(3)));    // sortieren nach jahr absteigend
+        Collections.reverse(lista_sortata2);
+        System.out.println(lista_sortata2);
+
+        String joined2;
+        for(List<String> el : lista_sortata2){
+            joined=String.join("#",el.toString());
+            fw2.write(joined);
+            fw2.write('\n');
+            fw2.flush();
+        }
+
 
 
     }
