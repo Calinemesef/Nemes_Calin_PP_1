@@ -77,8 +77,8 @@ public class Aufgabe1 {
         ArrayList<List<String>> listaFiltrata2;
 
         listaFiltrata.addAll(lista);
-        listaFiltrata2= (ArrayList<List<String>>) listaFiltrata.stream().filter(s-> Integer.parseInt(s.get(2))>9).collect(Collectors.toList());
-        listaFiltrata2.forEach(System.out::println);
+        //listaFiltrata2= (ArrayList<List<String>>) listaFiltrata.stream().filter(s-> Integer.parseInt(s.get(2))>9).collect(Collectors.toList());
+        //listaFiltrata2.forEach(System.out::println);
 
 
         ArrayList<List<String>> listaFiltrata3 = new ArrayList<>();
